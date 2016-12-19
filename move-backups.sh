@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+sudo chown -R fachadmin:ansible /backup/*
+
 echo "Copy Piwik Backups"
 scp ansible@piwiktest1.verwaltung.uni-muenchen.de:/data/backup/* /backup/piwik
 
@@ -11,3 +13,5 @@ scp ansible@cms-live-appdb1.verwaltung.uni-muenchen.de:/data/backup/* /backup/pl
 
 echo "Cleanup Backups (Delete old unnecessary Backups)"
 /home/fachadmin/backup_helper_scripts/cleanup-backups.py
+
+sudo chown -R ansible:ansible /backup/* 
