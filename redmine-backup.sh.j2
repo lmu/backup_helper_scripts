@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+export DATE=`date +%F`
+export  PGPASSWORD="redmine"
+
+{% for instance in instances -%}
+pg_dump --format=p --blobs --host=10.153.101.205 --username "redmine" "redmine-{{ instance }}" | gzip > "{{ backup_path }}/${DATE}_redmine_{{ instance }}_db.sql.gz"
+tar --gzip --create --verbose --directory="{{ data_dir }}/{{ instance }} --file="{{ backup_path }}/${DATE}_redmine_{{ instance }}_files.tar.gz" files" 
+{% endfor -%}
