@@ -10,6 +10,7 @@ import glob
 import logging
 import os
 import os.path
+import re
 import time
 
 
@@ -36,8 +37,10 @@ def cleanup_backups():
     backupfiles = glob.glob('/backup/*/*')
     backupfiles.sort()
 
+    pattern = re.compile('(\d{4}-\d{2}-\d{2})(\w|-|\.)+\.gz')
     for backupfile in backupfiles:
-        if os.path.isfile(backupfile):
+        filename = os.path.basename(backupfile)
+        if os.path.isfile(backupfile) and len(filename) > 10 and pattern.match(filename): 
             file_date = os.path.basename(backupfile)[0:10]
             file_date = time.strptime(file_date, '%Y-%m-%d')
             file_date = date(year=file_date[0], month=file_date[1], day=file_date[2])
@@ -48,7 +51,7 @@ def cleanup_backups():
                 log.info("delete file: %s", backupfile)
                 os.remove(backupfile)
             else:
-                log.debug("keep file: %s", backupfile)
+                log.debug("keep file:   %s", backupfile)
 
     log.info("Finished Cleanup of old Backup Files (%s)\n\n", date.today().isoformat())
 
