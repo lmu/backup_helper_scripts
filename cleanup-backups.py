@@ -24,16 +24,19 @@ def cleanup_backups():
         datefmt="%Y-%m-%d %H:%M:%S"
     )
     file_handler = logging.FileHandler(
-        '/backup/cleanup-backups.log',
+        '/backup/' + str(date.today().isoformat()) + '_cleanup-backups.log',
         mode='a',
         encoding='utf-8')
     file_handler.setFormatter(my_formatter)
     log.addHandler(file_handler)
-    log.setLevel(logging.DEBUG)
+    log.setLevel(logging.Info)
 
     log.info("Start Cleanup of old Backup Files (%s)", date.today().isoformat())
 
-    for backupfile in glob.glob('/backup/*/*'):
+    backupfiles = glob.glob('/backup/*/*')
+    backupfiles.sort()
+
+    for backupfile in backupfiles:
         if os.path.isfile(backupfile):
             file_date = os.path.basename(backupfile)[0:10]
             file_date = time.strptime(file_date, '%Y-%m-%d')
@@ -45,7 +48,7 @@ def cleanup_backups():
                 log.info("delete file: %s", backupfile)
                 os.remove(backupfile)
             else:
-                log.info("keep file: %s", backupfile)
+                log.debug("keep file: %s", backupfile)
 
     log.info("Finished Cleanup of old Backup Files (%s)\n\n", date.today().isoformat())
 
