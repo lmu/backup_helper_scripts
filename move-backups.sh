@@ -9,7 +9,7 @@ echo "Copy Redmine Backups"
 scp -p ansible@redmine1.verwaltung.uni-muenchen.de:/data/redmine.buildout/backup/* /backup/redmine
 
 echo "Copy Plone Backups"
-scp -p ansible@cms-live-appdb1.verwaltung.uni-muenchen.de:/data/backup/* /backup/plone
+sudo rsync --rsync-path="sudo rsync" -rlpt --delete -e ssh ansible@cms-live-appdb1.verwaltung.uni-muenchen.de:/data/backups/ /backup/plone
 
 echo "Cleanup Backups (Delete old unnecessary Backups)"
 /home/fachadmin/backup_helper_scripts/cleanup-backups.py
