@@ -6,7 +6,7 @@ echo "Copy Piwik Backups"
 scp -i /home/fachadmin/.ssh/id_rsa -p ansible@piwiktest1.verwaltung.uni-muenchen.de:/data/backup/* /backup/piwik
 
 echo "Copy Redmine Backups"
-scp -i /home/fachadmin/.ssh/id_rsa -p ansible@redmine1.verwaltung.uni-muenchen.de:/data/redmine.buildout/backup/* /backup/redmine
+scp -i /home/fachadmin/.ssh/id_rsa -p ansible@redmine3.verwaltung.uni-muenchen.de:/data/redmine.buildout/backup/* /backup/redmine3
 
 echo "Copy Plone Backups"
 rsync --rsync-path="sudo rsync" -rlpt --delete -e "ssh -i /home/fachadmin/.ssh/id_rsa" ansible@cms-live-appdb1.verwaltung.uni-muenchen.de:/data/backups/ /backup/plone

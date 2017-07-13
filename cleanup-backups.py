@@ -30,7 +30,7 @@ def cleanup_backups():
         encoding='utf-8')
     file_handler.setFormatter(my_formatter)
     log.addHandler(file_handler)
-    log.setLevel(logging.Info)
+    log.setLevel(logging.INFO)
 
     log.info("Start Cleanup of old Backup Files (%s)", date.today().isoformat())
 
